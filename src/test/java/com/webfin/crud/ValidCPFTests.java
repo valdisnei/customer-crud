@@ -1,14 +1,16 @@
 package com.webfin.crud;
 
-import com.webfin.model.People;
+import com.webfin.model.Customer;
+import com.webfin.model.DocumentType;
+import com.webfin.utils.impl.Validation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 
-import static com.webfin.utils.ValidaCPF.isCPF;
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,27 +19,31 @@ public class ValidCPFTests {
     @Parameterized.Parameters(name = "input:{0} - output:{1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {new People(randomUUID().toString(),"jose", "99515215099"), true},
-                {new People(randomUUID().toString(),"maria", "05001650500"), true},
-                {new People(randomUUID().toString(),"joao", "99514215029"), false},
-                {new People(randomUUID().toString(),"Manuela", "05301650500"), false},
-                {new People(randomUUID().toString(),"Paula", "05301"), false},
-                {new People(randomUUID().toString(),"joaquim", "005001650500"), false},
-
+                {new Validation(),new Customer(randomUUID().toString(),"jose","99515215099", DocumentType.CPF), true},
+                {new Validation(),new Customer(randomUUID().toString(),"maria", "05001650500",DocumentType.CPF), true},
+                {new Validation(),new Customer(randomUUID().toString(),"joao", "99514215029",DocumentType.CPF), false},
+//                {new People(randomUUID().toString(),"Manuela", "05301650500",TipoDocumento.CPF)), false},
+//                {new People(randomUUID().toString(),"Paula", new Documento("05301",TipoDocumento.CPF)), false},
+//                {new People(randomUUID().toString(),"joaquim", new Documento("005001650500",TipoDocumento.CPF)), false},
+//                {new People(randomUUID().toString(),"joaquim", new Documento(null,TipoDocumento.CPF)), false},
+//                {new People(randomUUID().toString(),"joaquim", new Documento("",TipoDocumento.CPF)), false},
         });
     }
 
-    private final People input;
+    private final Customer input;
     private final boolean expected;
 
-    public ValidCPFTests(People input, boolean expected) {
+    private final Function<Customer,Boolean> validation;
+
+    public ValidCPFTests(Function<Customer, Boolean> validation, Customer input, boolean expected) {
         this.input = input;
         this.expected = expected;
+        this.validation = validation;
     }
 
     @Test
     public void to_valid_document() {
-        assertEquals(expected, isCPF(input.getDocument()));
+        assertEquals(expected, validation.apply(input));
     }
 
 }

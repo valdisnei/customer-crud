@@ -1,4 +1,4 @@
-package com.webfin.utils;
+package com.webfin.utils.impl;
 
 import org.apache.logging.log4j.util.Strings;
 
@@ -81,5 +81,6 @@ public class ValidaCNPJ {
         }
         return doc;
     }
+
 
 }

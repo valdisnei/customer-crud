@@ -1,0 +1,21 @@
+version: '2'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - 'mongodb-data:/data/db'
+    ports:
+      - '27017:27017'
+  customer:
+    image: "customer-crud"
+    environment:
+      host_mongodb: "mongodb:27017"
+      spring_profiles_active: default
+    ports:
+      - "8080:8080"
+volumes:
+  mongodb-data: {}
