@@ -1,6 +1,7 @@
 package com.webfin.api;
 
 import com.webfin.model.Customer;
+import com.webfin.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +21,15 @@ public class ApiCustomer {
 
     private final Function<Customer, Boolean> validation;
 
+    private final CustomerRepository customerRepository;
+
     @PostMapping("/create")
-    private ResponseEntity<String> save(@RequestBody @Valid Customer customer) {
+    private ResponseEntity<Customer> save(@RequestBody @Valid Customer customer) {
 
         log.info("Customer: {} - Document: {}", customer, validation.apply(customer));
-        return ResponseEntity.ok("");
+
+        Customer dbCustomer = customerRepository.save(customer);
+
+        return ResponseEntity.ok(dbCustomer);
     }
 }
