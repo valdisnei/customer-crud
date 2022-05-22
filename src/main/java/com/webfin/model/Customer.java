@@ -3,6 +3,7 @@ package com.webfin.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.NotBlank;
 
@@ -15,7 +16,7 @@ public class Customer {
     private String name;
     @NotBlank
     private String document;
-
+    @NonNull
     private DocumentType documentType;
 
 }
