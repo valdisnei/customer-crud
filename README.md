@@ -46,3 +46,8 @@ Esta API disponibiliza endpoint para inserção de dados dos clientes.<br><br>
 3 - Start da Applicacao
 
     java -jar target/customer-crud-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
+
+
+
+## Documentação Api 
+* [`Api Customer Documentation - Com serviço em execução clique aqui para acessar`](http://localhost:8080/swagger-ui.html)
