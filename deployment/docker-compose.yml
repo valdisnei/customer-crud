@@ -11,7 +11,7 @@ services:
     ports:
       - '27017:27017'
   customer:
-    image: "customer-crud"
+    build: ../.
     environment:
       host_mongodb: "mongodb:27017"
       spring_profiles_active: default

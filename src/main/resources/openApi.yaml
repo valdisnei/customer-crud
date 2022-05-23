@@ -1,0 +1,122 @@
+swagger: "2.0"
+info:
+  description: "Cadastro de customers via api rest. Esta API disponibiliza endpoint para inserção de dados dos clientes."
+  version: "1.0.0"
+  title: "Crud Customer's WebFin"
+host: "localhost:8080"
+basePath: "/api/v1"
+tags:
+- name: "Customer"
+  description: "Everything about your Customers"
+
+schemes:
+- "http"
+paths:
+  /customers/create:
+    post:
+      tags:
+      - "Customer"
+      summary: "Add a new customer to the webFin"
+      description: ""
+      operationId: "created"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Customer object that needs to be added to the webFin"
+        required: true
+        schema:
+          $ref: "#/definitions/Customer"
+      responses:
+        "201":
+          description: "created input"
+  /customers:
+    get:
+      tags:
+      - "Customer"
+      summary: "All Customers of the WebFin"
+      description: "All customers paged"
+      operationId: "getCustomers"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Customer"
+        "400":
+          description: "Invalid status value"
+  /customers/{id}/update:
+    put:
+      tags:
+      - "Customer"
+      summary: "Updated Customer"
+      description: "This can only be done if customer exist."
+      operationId: "updateCustomer"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated customer object"
+        required: true
+        schema:
+          $ref: "#/definitions/Customer"
+      responses:
+        "400":
+          description: "Invalid customer supplied"
+        "404":
+          description: "Customer not found"
+  /customers/{id}:
+    delete:
+      tags:
+      - "Customer"
+      summary: "Delete customer"
+      description: "This can only be done if customer exist."
+      operationId: "deleteCustomer"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that need to be updated"
+        required: true
+        type: string
+      responses:
+        "404":
+          description: "Customer not found"
+definitions:
+  Customer:
+    type: "object"
+    required:
+    - "name"
+    - "document"
+    - "documentType"
+    properties:
+      id:
+        type: "string"
+        example: null
+      name:
+        type: "string"
+        example: "jose"
+      document:
+        type: "string"
+        example: "99515215099"
+        description: "client's document just numbers"
+      documentType:
+        type: "string"
+        description: "document type (CPF,CNPJ) of the client "
+        example: "CPF"
+        enum:
+        - "CPF"
+        - "CNPJ"
